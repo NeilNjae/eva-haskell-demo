@@ -1,0 +1,54 @@
+name: main
+synopsis: Demo
+version: '0.0.1'
+
+default-extensions:
+- AllowAmbiguousTypes
+- ApplicativeDo
+- BangPatterns
+- BlockArguments
+- DataKinds
+- DeriveFoldable
+- DeriveFunctor
+- DeriveGeneric
+- DeriveTraversable
+- EmptyCase
+- FlexibleContexts
+- FlexibleInstances
+- FunctionalDependencies
+- GADTs
+- GeneralizedNewtypeDeriving
+- ImplicitParams
+- KindSignatures
+- LambdaCase
+- MonadComprehensions
+- MonoLocalBinds
+- MultiParamTypeClasses
+- MultiWayIf
+- NegativeLiterals
+- NumDecimals
+- OverloadedLists
+- OverloadedStrings
+- PartialTypeSignatures
+- PatternGuards
+- PatternSynonyms
+- PolyKinds
+- RankNTypes
+- RecordWildCards
+- ScopedTypeVariables
+- TemplateHaskell
+- TransformListComp
+- TupleSections
+- TypeApplications
+- TypeInType
+- TypeOperators
+- ViewPatterns
+
+
+executables:
+  main:
+    main: Main.hs
+    source-dirs: src
+    dependencies:
+    - base >= 2 && < 6
+    - containers
