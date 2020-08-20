@@ -1,6 +1,3 @@
--- Advent: days 1, 6, 8
--- parsing: 14, 22
-
 module Main where
 
 import qualified Data.Tree as DT
@@ -69,6 +66,10 @@ ppt :: (Show a) => Tree a -> IO ()
 ppt = putStrLn . DT.drawTree . toDataTree
 
 
+fibsU :: [Int]
+fibsU = unfoldr (\(a, b) -> Just (a, (b, a+b))) (0, 1)
+
+
 main :: IO ()
 main = do
   putStrLn "hello world"
@@ -77,13 +78,60 @@ main = do
 
 
 names :: [String]
-names = ["alice", "bob", "eve"]
+names = ["neil", "gytha", "eva"]
 
 suffs :: [String]
-suffs =  ["!", "?", " :-)"]
+suffs = ["!", "?", " :-)"]
 
 
-fibsU :: [Int]
-fibsU = unfoldr (\(a, b) -> Just (a, (b, a+b))) (0, 1)
+type Name = String
+type Key = String
+type Address = String
+type Cost = Int
 
+keyFromName :: Name -> Key
+keyFromName name = name ++ "'s key"
+
+addressFromKey :: Key -> Address
+addressFromKey key = key ++ "'s address"
+
+postCostFromAddress :: Address -> Cost
+postCostFromAddress address = length address
+
+
+addressFromName = addressFromKey . keyFromName
+
+postCostFromName = postCostFromAddress . addressFromKey . keyFromName
+
+maybeKeyFromName :: Name -> Maybe Key
+maybeKeyFromName name 
+    | name == "neil" = Just (name ++ "'s key")
+    | otherwise      = Nothing
+
+maybeAddressFromKey :: Key -> Maybe Address
+maybeAddressFromKey key = Just (key ++ "'s address")
+
+maybePostCostFromAddress :: Address -> Maybe Cost
+maybePostCostFromAddress address = Just (length address)
+
+-- maybeAddressFromName name =
+--     case (maybeKeyFromName name) of
+--         Just key -> maybeAddressFromKey key
+--         Nothing -> Nothing
+
+-- maybePostCostFromName name = 
+--     case (maybeKeyFromName name) of
+--         Just key -> case (maybeAddressFromKey key) of
+--                         Just address -> maybePostCostFromAddress address
+--                         Nothing -> Nothing
+--         Nothing -> Nothing
+
+composeMaybe :: (b -> Maybe c) -> (a -> Maybe b) -> (a -> Maybe c)
+composeMaybe f g = \x -> case (g x) of
+                            Just y -> f y
+                            Nothing -> Nothing
+
+maybeAddressFromName = maybeAddressFromKey `composeMaybe` maybeKeyFromName
+
+maybePostCostFromName = maybePostCostFromAddress `composeMaybe` maybeAddressFromKey `composeMaybe` maybeKeyFromName
 

@@ -1,7 +1,7 @@
 -- Advent: days 1, 6, 8
 -- parsing: 14, 22
 
-module Main where
+module Earlier where
 
 import qualified Data.Tree as DT
 import Data.List 
@@ -83,8 +83,8 @@ fibNaive 0 = 0
 fibNaive 1 = 1
 fibNaive n = fibNaive (n - 1) + fibNaive (n - 2)
 
-fibsDirect = fibsDirectHelper 0
-    where fibsDirectHelper n = (fibNaive n) : (fibsDirectHelper (n + 1))
+fibsDirect = fibsNaiveHelper 0
+    where fibsNaiveHelper n = (fibNaive n) : (fibsNaiveHelper (n + 1))
 
 
 names :: [String]
@@ -104,6 +104,10 @@ fibsNaive = map fibNaive [0..]
 
 fibs :: [Int]
 fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
+
+-- “The mind, once stretched by a new idea, never returns to its original dimensions.”
+-- ― Ralph Waldo Emerson
+
 
 -- fib :: Int -> Int
 -- fib n = genericIndex fibs n
